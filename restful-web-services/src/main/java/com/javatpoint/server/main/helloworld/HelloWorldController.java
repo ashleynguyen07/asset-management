@@ -1,5 +1,6 @@
 package com.javatpoint.server.main.helloworld;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,9 @@ public class HelloWorldController {
         employeeList.add(new Employee("E160798", "Truong Le Minh", "03/12/2002", "EM", "male", "e10adc3949ba59abbe56e057f20f883e"));
         employeeList.add(new Employee("E160052", "Hoa Doan", "05/06/1990", "MA", "male", "e10adc3949ba59abbe56e057f20f883e"));
     } 
+
+    @CrossOrigin(origins = "http://localhost:8080/employees", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+
     // using get method and hello-world URI
     @GetMapping(path = "/employees")
     public ArrayList<Employee> helloWorld() {
