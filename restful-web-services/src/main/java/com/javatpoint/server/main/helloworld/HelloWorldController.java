@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
-// Controller
 @RestController
 public class HelloWorldController {
     public ArrayList<Employee> employeeList;
@@ -25,7 +25,8 @@ public class HelloWorldController {
         employeeList.add(new Employee("E160052", "Hoa Doan", "05/06/1990", "MA", "male", "e10adc3949ba59abbe56e057f20f883e"));
     } 
 
-    @CrossOrigin(origins = "http://localhost:8080/employees", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+
 
     // using get method and hello-world URI
     @GetMapping(path = "/employees")
