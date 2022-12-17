@@ -17,9 +17,11 @@ public class HelloWorldController {
     public ArrayList<Employee> employeeList;
     public HelloWorldController() {
         employeeList = new ArrayList<Employee>();
-        //employeeList.add(new Employee());
-        employeeList.add(new Employee("B001", "Tra My", "07/07/2001", "EM", null, null));
-        employeeList.add(new Employee("B002", "Nam", "07/07/2001", "EM", null, null));
+        employeeList.add(new Employee("E160001", "Nguyen Hong Hiep", "12/06/2000", "EM", "male", "e10adc3949ba59abbe56e057f20f883e"));
+        employeeList.add(new Employee("E160240", "Tran Dinh Khanh", "15/07/2002", "EM", "male", "e10adc3949ba59abbe56e057f20f883e"));
+        employeeList.add(new Employee("E140449", "Le Buu Nhan", "10/07/2002", "EM", "male", "e10adc3949ba59abbe56e057f20f883e"));
+        employeeList.add(new Employee("E160798", "Truong Le Minh", "03/12/2002", "EM", "male", "e10adc3949ba59abbe56e057f20f883e"));
+        employeeList.add(new Employee("E160052", "Hoa Doan", "05/06/1990", "MA", "male", "e10adc3949ba59abbe56e057f20f883e"));
     } 
     // using get method and hello-world URI
     @GetMapping(path = "/employees")
