@@ -3,14 +3,22 @@ package com.javatpoint.server.main.helloworld;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.model.Asset;
 import com.employee.model.Employee;
+import com.employee.model.DAO.LoginDAO;
 
 import java.util.ArrayList;
 
 import org.springframework.context.annotation.Configuration;
+
+
+
+@CrossOrigin(origins = "*", allowedHeaders = "*", exposedHeaders = "X-Get-Header")
+
 
 @Configuration
 @RestController
@@ -33,7 +41,6 @@ public class HelloWorldController {
         assetList.add(new Asset("A002", "Macbook pro 2016", "Sliver", 1000, 5, 2.2));
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
     
 
     // using get method and hello-world URI
@@ -57,5 +64,11 @@ public class HelloWorldController {
     @GetMapping(path = "/hello-world/path-variable/{name}")
     public HelloWorldBean helloWorldPathVariable(@PathVariable String name) {
         return new HelloWorldBean(String.format("Hello World, %s", name)); // %s replace the name
+    }
+
+    @PostMapping(path = "/login")
+    public ArrayList<Employee> Login(@RequestBody LoginDAO loginDAO) {
+        System.out.println(loginDAO.employeeID + " & " + loginDAO.password);
+        return employeeList;
     }
 }

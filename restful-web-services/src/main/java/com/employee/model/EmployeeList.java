@@ -42,8 +42,9 @@ public class EmployeeList extends ArrayList<Employee> {
 
     }
 
-    public void addInforToFile() {
-        String pw1 = encode("111111");
+    // public int checkLogin(String accountName, String password) {
+        
     }
 
-}
+    
+
