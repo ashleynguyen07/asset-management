@@ -1,6 +1,6 @@
-package com.employee.model.DAO;
+package com.employee.model.DTO;
 
-public class LoginDAO {
+public class LoginDTO {
 
     public String employeeID;
     public String password;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.model.Asset;
 import com.employee.model.Employee;
-import com.employee.model.DAO.LoginDAO;
+import com.employee.model.DTO.LoginDTO;
 
 import java.util.ArrayList;
 
@@ -67,8 +67,8 @@ public class HelloWorldController {
     }
 
     @PostMapping(path = "/login")
-    public ArrayList<Employee> Login(@RequestBody LoginDAO loginDAO) {
-        System.out.println(loginDAO.employeeID + " & " + loginDAO.password);
+    public ArrayList<Employee> Login(@RequestBody LoginDTO loginDTO) {
+        System.out.println(loginDTO.employeeID + " & " + loginDTO.password);
         return employeeList;
     }
 }
