@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.model.Asset;
 import com.employee.model.Employee;
+import com.employee.model.EmployeeDAO;
 import com.employee.model.DTO.LoginDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 
@@ -25,16 +28,21 @@ import org.springframework.context.annotation.Configuration;
 public class HelloWorldController {
     public ArrayList<Employee> employeeList;
     public ArrayList<Asset> assetList;
+    public EmployeeDAO employeeDAO;
 
     public HelloWorldController() {
 
-        
-        employeeList = new ArrayList<Employee>();
-        employeeList.add(new Employee("E160001", "Nguyen Hong Hiep", "12/06/2000", "EM", "male","e10adc3949ba59abbe56e057f20f883e"));
-        employeeList.add(new Employee("E160240", "Tran Dinh Khanh", "15/07/2002", "EM", "male","e10adc3949ba59abbe56e057f20f883e"));
-        employeeList.add(new Employee("E140449", "Le Buu Nhan", "10/07/2002", "EM", "male", "e10adc3949ba59abbe56e057f20f883e"));
-        employeeList.add(new Employee("E160798", "Truong Le Minh", "03/12/2002", "EM", "male","e10adc3949ba59abbe56e057f20f883e"));
-        employeeList.add(new Employee("E160052", "Hoa Doan", "05/06/1990", "MA", "male", "e10adc3949ba59abbe56e057f20f883e"));
+        // ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        // Object a =  ctx.getBean("dataSource");
+        employeeDAO = new EmployeeDAO();
+    
+
+        // employeeList = new ArrayList<Employee>();
+        // employeeList.add(new Employee("E160001", "Nguyen Hong Hiep", "12/06/2000", "EM", "male","e10adc3949ba59abbe56e057f20f883e"));
+        // employeeList.add(new Employee("E160240", "Tran Dinh Khanh", "15/07/2002", "EM", "male","e10adc3949ba59abbe56e057f20f883e"));
+        // employeeList.add(new Employee("E140449", "Le Buu Nhan", "10/07/2002", "EM", "male", "e10adc3949ba59abbe56e057f20f883e"));
+        // employeeList.add(new Employee("E160798", "Truong Le Minh", "03/12/2002", "EM", "male","e10adc3949ba59abbe56e057f20f883e"));
+        // employeeList.add(new Employee("E160052", "Hoa Doan", "05/06/1990", "MA", "male", "e10adc3949ba59abbe56e057f20f883e"));
 
         assetList = new ArrayList<Asset>();
         assetList.add(new Asset("A001", "Samsung Projector", "White", 500, 10, 3.2));
@@ -46,11 +54,22 @@ public class HelloWorldController {
     // using get method and hello-world URI
     @GetMapping(path = "/employees")
     public ArrayList<Employee> helloWorld() {
-        return employeeList;
+        ArrayList<Employee> employeeListDAO = employeeDAO.getEmployeeList();
+        return employeeListDAO;
+    }
+    @PostMapping(path = "/employees")
+    public Employee addEmployee(@RequestBody Employee employee) {
+        employee = new Employee("E160056", "Nguyen My", "12/06/2000", "EM", "female","e10adc");
+        employeeDAO.addEmployee(employee);
+        return new Employee("E160056", "Nguyen My2", "12/06/2000", "EM", "female","e10adc");
     }
     @GetMapping(path = "/asset")
     public ArrayList<Asset> helloworld() {
         return assetList;
+    }
+    @GetMapping(path = "/login")
+    public ArrayList<Employee> checklogin() {
+        return checklogin();
     }
 
     @GetMapping(path = "/hello-world-bean")
@@ -66,9 +85,9 @@ public class HelloWorldController {
         return new HelloWorldBean(String.format("Hello World, %s", name)); // %s replace the name
     }
 
-    @PostMapping(path = "/login")
-    public ArrayList<Employee> Login(@RequestBody LoginDTO loginDTO) {
-        System.out.println(loginDTO.employeeID + " & " + loginDTO.password);
-        return employeeList;
-    }
+    // @PostMapping(path = "/login")
+    // public ArrayList<Employee> Login(@RequestBody LoginDTO loginDTO) {
+    //     System.out.println(loginDTO.employeeID + " & " + loginDTO.password);
+    //     return employeeList;
+    // }
 }
