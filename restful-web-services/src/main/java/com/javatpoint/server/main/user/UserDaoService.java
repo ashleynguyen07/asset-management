@@ -8,7 +8,7 @@ public class UserDaoService
 {
 public static int usersCount=5;
 //creating an instance of ArrayList
-private static List<User> users=new ArrayList();
+private static List<User> users=new ArrayList<>();
 //static block 
 static
 {
