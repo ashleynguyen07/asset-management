@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.model.Asset;
 import com.employee.model.Employee;
 import com.employee.model.EmployeeDAO;
+import com.employee.model.EmployeeList;
 import com.employee.model.DTO.LoginDTO;
 
 import java.util.ArrayList;
@@ -29,12 +31,14 @@ public class HelloWorldController {
     public ArrayList<Employee> employeeList;
     public ArrayList<Asset> assetList;
     public EmployeeDAO employeeDAO;
+    // public  login;
 
     public HelloWorldController() {
 
         // ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         // Object a =  ctx.getBean("dataSource");
         employeeDAO = new EmployeeDAO();
+        // login = new EmployeeList();
     
 
         // employeeList = new ArrayList<Employee>();
@@ -52,6 +56,11 @@ public class HelloWorldController {
     
 
     // using get method and hello-world URI
+
+    @GetMapping (path = "/login")
+    public String login() {
+        return "login";
+    }
     @GetMapping(path = "/employees")
     public ArrayList<Employee> helloWorld() {
         ArrayList<Employee> employeeListDAO = employeeDAO.getEmployeeList();
@@ -67,27 +76,29 @@ public class HelloWorldController {
     public ArrayList<Asset> helloworld() {
         return assetList;
     }
-    @GetMapping(path = "/login")
-    public ArrayList<Employee> checklogin() {
-        return checklogin();
-    }
+    // @GetMapping(path = "/login")
+    // public ArrayList<Employee> checklogin() {
+    //     return checklogin();
+    // }
 
-    @GetMapping(path = "/hello-world-bean")
-    // method- which returns "Hello World"
-    public HelloWorldBean helloWorldBean() {
-        return new HelloWorldBean("Hello World");// constructor of HelloWorldBean
-    }
+    // @GetMapping(path = "/hello-world-bean")
+    // // method- which returns "Hello World"
+    // public HelloWorldBean helloWorldBean() {
+    //     return new HelloWorldBean("Hello World");// constructor of HelloWorldBean
+    // }
 
     // passing a path variable
     // hello-world/path-variable/javatpoint
-    @GetMapping(path = "/hello-world/path-variable/{name}")
-    public HelloWorldBean helloWorldPathVariable(@PathVariable String name) {
-        return new HelloWorldBean(String.format("Hello World, %s", name)); // %s replace the name
-    }
+    // @GetMapping(path = "/hello-world/path-variable/{name}")
+    // public HelloWorldBean helloWorldPathVariable(@PathVariable String name) {
+    //     return new HelloWorldBean(String.format("Hello World, %s", name)); // %s replace the name
+    // }
 
     // @PostMapping(path = "/login")
     // public ArrayList<Employee> Login(@RequestBody LoginDTO loginDTO) {
     //     System.out.println(loginDTO.employeeID + " & " + loginDTO.password);
     //     return employeeList;
     // }
+    
+
 }
