@@ -72,4 +72,8 @@ public class Employee implements Serializable {
         return "Employee ID = " + this.employID + "Name = " + name + "Birthdate = " + birthdate + "Role = " + role + "Sex = " + sex + "Password = " + password;
     }
 
+    public Employee addEmployee(Employee employee) {
+        return null;
+    }
+
 }

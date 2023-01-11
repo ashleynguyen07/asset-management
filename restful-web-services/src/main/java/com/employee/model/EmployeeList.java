@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.management.RuntimeErrorException;
 
 public class EmployeeList extends ArrayList<Employee> {
-    //ArrayList<Employee> list;
+    ArrayList<Employee> list;
     Employee cd;
     int index;
 
@@ -42,7 +42,20 @@ public class EmployeeList extends ArrayList<Employee> {
 
     }
 
-    // public int checkLogin(String accountName, String password) {
+    public int checkLogin(String accountName, String password) {
+        int count = 0;
+        for (Employee ep : list) {
+            if ((ep.getEmployID().equals(accountName)) && (ep.getPassword().equals(password)) && (ep.getRole().equalsIgnoreCase("MA"))) {
+                count = 1;
+                break;
+            }
+            if ((ep.getEmployID().equals(accountName)) && (ep.getPassword().equals(password)) && (ep.getRole().equalsIgnoreCase("EM"))) {
+                count = 2;
+                break;
+            }
+        }
+        return count;        
+    }
         
     }
 
