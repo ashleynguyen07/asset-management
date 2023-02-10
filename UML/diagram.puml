@@ -1,0 +1,105 @@
+@startuml Project Java Fullstack - My Company
+skinparam handwritten true
+skinparam ParticipantPadding 50
+skinparam BoxPadding 10
+left to right direction
+
+skinparam actor {
+  backgroundColor #FEFEC8
+  borderColor #BD0042
+  borderThickness 2
+}
+skinparam usecase {
+  backgroundColor #FEFEC8
+  borderColor #BD0042
+}
+skinparam package {
+  backgroundColor #EEEBDC
+}
+
+skinparam ArrowColor BD0042
+skinparam ArrowThickness 1.5
+skinparam UsecaseBorderThickness 2
+skinparam PersonBorderThickness 2
+' skinparam ArrowFontSize 10
+' skinparam ActorFontSize 10
+' skinparam UsecaseFontSize 10
+package AdminApp{
+  usecase "Đăng nhập" as UC_Login
+  usecase "Danh sách nhân viên (xem, thêm, sửa, xoá)" as UC_StaffsAdmin
+  usecase "Danh sách bộ phận (thêm, sửa, xoá" as UC_DepartmentsAdmin
+  usecase "Danh sách nhân viên trong bộ phận" as UC_DepartmentsStaffsAdmin
+  usecase "Thông tin Covid nhân viên" as UC_CovidAdmin
+  usecase "Danh sách lương nhân viên" as UC_StaffsSalaryAdmin
+  usecase "Danh sách giờ làm viên" as UC_StaffsAttendanceAdmin
+
+}
+actor "Quản trị viên" as Admin
+actor "Kế toán" as Accountant
+actor "Hệ thống" as System
+Admin ---> UC_Login
+Admin ---> UC_StaffsAdmin
+Admin ---> UC_DepartmentsAdmin
+Admin ---> UC_DepartmentsStaffsAdmin
+Accountant ---> UC_StaffsSalaryAdmin
+Accountant ---> UC_StaffsAttendanceAdmin
+Admin ---> UC_CovidAdmin
+' System ---> UC_Holydays
+
+
+rectangle Controller{
+  usecase "/staffs/info\n(GET,POST)" as Rest_Staffs
+  usecase "/staffs/info/{id}\n(GET,PATCH,DELETE)" as Rest_Staff
+  usecase "/staffs/attendance\n(GET,POST,DELETE)" as Rest_AttendanceStaffs
+  usecase "/staffs/attendance/{id}\n(GET,POST,DELETE)" as Rest_AttendanceStaff
+  usecase "/staffs/salary\n(GET,POST,DELETE)" as Rest_SalaryStaffs
+  usecase "/staffs/salary/{id}\n(GET,POST,DELETE)" as Rest_SalaryStaff
+  usecase "/departments\n(GET,POST,PATCH,DELETE)" as Rest_Departments
+  usecase "/login\n(POST)" as Rest_Login
+  usecase "/departments/{id}\n(GET)" as Rest_DepartmentsStaffs
+  usecase "Thêm ngày phép toàn công ty (định kỳ)" as UC_Holydays
+  usecase "/covid\n(GET,POST,PATCH,DELETE)" as Rest_Covid
+}
+UC_Login -> Rest_Login
+UC_StaffsAdmin ---> Rest_Staffs
+UC_StaffsAdmin ---> Rest_Staff
+UC_StaffsAttendanceAdmin -> Rest_AttendanceStaffs
+UC_DepartmentsAdmin ---> Rest_Departments
+UC_DepartmentsStaffsAdmin ---> Rest_DepartmentsStaffs
+UC_StaffsSalaryAdmin ---> Rest_SalaryStaffs
+UC_CovidAdmin ---> Rest_Covid
+System ---> UC_Holydays
+
+database MSSQL
+Controller <---> MSSQL : transaction via Model
+
+
+package StaffApp {
+  usecase "Đăng nhập" as UC_LoginStaff
+  usecase "Điểm danh bắt đầu/kết thúc làm" as UC_AttendanceStaff
+  usecase "Xác nhận dữ liệu giờ làm của nhân viên" as UC_CheckTimeSheetStaffs
+  usecase "Xem/sửa thông tin cá nhân" as UC_EditProfileStaff
+  usecase "Tra cứu thông tin giờ làm, lương" as UC_SalaryStaff
+  usecase "Thông tin Covid cá nhân" as UC_CovidStaff
+}
+actor "Nhân viên" as Staff
+actor "Quản lý" as Manager
+UC_LoginStaff <--- Staff
+UC_AttendanceStaff <--- Staff
+UC_EditProfileStaff <--- Staff
+UC_SalaryStaff <--- Staff
+UC_CovidStaff <--- Staff
+UC_CheckTimeSheetStaffs <--- Manager
+UC_AttendanceStaff <--- Manager
+UC_CovidStaff <--- Manager
+UC_LoginStaff <--- Manager
+
+Rest_Login <--- UC_LoginStaff
+Rest_Covid <--- UC_CovidStaff
+Rest_Staff <--- UC_EditProfileStaff
+Rest_AttendanceStaff <--- UC_AttendanceStaff
+Rest_AttendanceStaffs <--- UC_CheckTimeSheetStaffs
+Rest_SalaryStaff <--- UC_SalaryStaff
+
+
+@enduml
