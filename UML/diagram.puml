@@ -27,7 +27,7 @@ skinparam PersonBorderThickness 2
 
 rectangle department {
 }
-usecase "ID" as UC_DepartmentID
+usecase "Department ID" as UC_DepartmentID
 usecase "Name" as UC_DepartmentName
 
 department ---> UC_DepartmentID
@@ -36,7 +36,7 @@ department ---> UC_DepartmentName
 
 rectangle staffInfo {
 }
-usecase "ID" as UC_StaffID
+usecase "Staff ID" as UC_StaffID
 usecase "Full Name" as UC_FullName
 usecase "Birthdate" as UC_Birthdate
 usecase "Sex" as UC_Sex
@@ -51,7 +51,7 @@ staffInfo ---> UC_DepartmentID
 
 rectangle login {
 }
-usecase "ID" as UC_StaffID
+usecase "Staff ID" as UC_StaffID
 usecase "User name" as UC_UserName
 usecase "Pass word" as UC_Password
 
@@ -61,7 +61,7 @@ login ---> UC_Password
 
 rectangle attendance {
 }
-usecase "ID" as UC_StaffID
+usecase "Staff ID" as UC_StaffID
 usecase "Start Hour" as UC_StartHour
 usecase "End Hour" as UC_EndHour
 usecase "Workplace" as UC_WorkPlace
