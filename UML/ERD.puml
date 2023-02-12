@@ -9,27 +9,27 @@ skinparam linetype ortho
 entity "Department" as deparment {
   *department_id : int <<PK>>
   --
-  *name : nvarchar 
+  *full_name : nvarchar 
 }
 
 entity "StaffInfo" as staffInfo {
-  *id : int <<PK>>
+  *staff_id : int <<PK>>
   --
-  *name : nvarchar 
+  *full_name : nvarchar 
   birthdate: date 
   sex: char
   department_id: int <<FK>
 }
 
 entity "Login" as login {
-  *id : int <<FK>>
+  *staff_id : int <<FK>>
   --
   *user_name : char
   password: char
 }
 
 entity "Covid" as covid {
-  *id : int <<FK>>
+  *staff_id : int <<FK>>
   --
   *start_date : date
   end_date: date
@@ -44,7 +44,7 @@ entity "Attendance" as attendance {
 }
 
 entity "Salary" as salary {
-  *id : varchar <<FK>>
+  *staff_id : int <<FK>>
   --
   *work_hour : int
   salary: double
@@ -52,7 +52,7 @@ entity "Salary" as salary {
 }
 
 entity "System" as system {
-  *system_id : varchar <<PK>>
+  *staff_id : int <<FK>>
   --
   *date_off : date
   reason: char
