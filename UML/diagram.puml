@@ -24,82 +24,138 @@ skinparam PersonBorderThickness 2
 ' skinparam ArrowFontSize 10
 ' skinparam ActorFontSize 10
 ' skinparam UsecaseFontSize 10
-package AdminApp{
-  usecase "Đăng nhập" as UC_Login
-  usecase "Danh sách nhân viên (xem, thêm, sửa, xoá)" as UC_StaffsAdmin
-  usecase "Danh sách bộ phận (thêm, sửa, xoá" as UC_DepartmentsAdmin
-  usecase "Danh sách nhân viên trong bộ phận" as UC_DepartmentsStaffsAdmin
-  usecase "Thông tin Covid nhân viên" as UC_CovidAdmin
-  usecase "Danh sách lương nhân viên" as UC_StaffsSalaryAdmin
-  usecase "Danh sách giờ làm viên" as UC_StaffsAttendanceAdmin
 
+rectangle department {
 }
-actor "Quản trị viên" as Admin
-actor "Kế toán" as Accountant
-actor "Hệ thống" as System
-Admin ---> UC_Login
-Admin ---> UC_StaffsAdmin
-Admin ---> UC_DepartmentsAdmin
-Admin ---> UC_DepartmentsStaffsAdmin
-Accountant ---> UC_StaffsSalaryAdmin
-Accountant ---> UC_StaffsAttendanceAdmin
-Admin ---> UC_CovidAdmin
+usecase "ID" as UC_DepartmentID
+usecase "Name" as UC_DepartmentName
+
+department ---> UC_DepartmentID
+department ---> UC_DepartmentName
+
+
+rectangle staffInfo {
+}
+usecase "ID" as UC_StaffID
+usecase "Full Name" as UC_FullName
+usecase "Birthdate" as UC_Birthdate
+usecase "Sex" as UC_Sex
+usecase "Department ID" as UC_DepartmentID
+
+staffInfo ---> UC_StaffID
+staffInfo ---> UC_FullName
+staffInfo ---> UC_Birthdate
+staffInfo ---> UC_Sex
+staffInfo ---> UC_DepartmentID
+
+
+rectangle login {
+}
+usecase "ID" as UC_StaffID
+usecase "User name" as UC_UserName
+usecase "Pass word" as UC_Password
+
+login ---> UC_StaffID
+login ---> UC_UserName
+login ---> UC_Password
+
+rectangle attendance {
+}
+usecase "ID" as UC_StaffID
+usecase "Start Hour" as UC_StartHour
+usecase "End Hour" as UC_EndHour
+usecase "Workplace" as UC_WorkPlace
+usecase "Static" as UC_Static
+
+attendance ---> UC_StaffID
+attendance ---> UC_StartHour
+attendance ---> UC_EndHour
+attendance ---> UC_WorkPlace
+attendance ---> UC_Static
+
+rectangle salary {
+}
+usecase "ID" as UC_StaffID
+usecase "Work Hour" as UC_WorkHour
+usecase "Salary" as UC_Salary
+usecase "Basic Salary" as UC_BasicSalary
+
+salary ---> UC_StaffID
+salary ---> UC_WorkHour
+salary ---> UC_Salary
+salary ---> UC_BasicSalary
+
+
+
+
+
+
+' actor "Quản trị viên" as Admin
+' actor "Kế toán" as Accountant
+' actor "Hệ thống" as System
+' Admin ---> UC_Login
+' Admin ---> UC_StaffsAdmin
+' Admin ---> UC_DepartmentsAdmin
+' Admin ---> UC_DepartmentsStaffsAdmin
+' Accountant ---> UC_StaffsSalaryAdmin
+' Accountant ---> UC_StaffsAttendanceAdmin
+' Admin ---> UC_CovidAdmin
+' ' System ---> UC_Holydays
+
+
+' rectangle Controller{
+'   usecase "/staffs/info\n(GET,POST)" as Rest_Staffs
+'   usecase "/staffs/info/{id}\n(GET,PATCH,DELETE)" as Rest_Staff
+'   usecase "/staffs/attendance\n(GET,POST,DELETE)" as Rest_AttendanceStaffs
+'   usecase "/staffs/attendance/{id}\n(GET,POST,DELETE)" as Rest_AttendanceStaff
+'   usecase "/staffs/salary\n(GET,POST,DELETE)" as Rest_SalaryStaffs
+'   usecase "/staffs/salary/{id}\n(GET,POST,DELETE)" as Rest_SalaryStaff
+'   usecase "/departments\n(GET,POST,PATCH,DELETE)" as Rest_Departments
+'   usecase "/login\n(POST)" as Rest_Login
+'   usecase "/departments/{id}\n(GET)" as Rest_DepartmentsStaffs
+'   usecase "Thêm ngày phép toàn công ty (định kỳ)" as UC_Holydays
+'   usecase "/covid\n(GET,POST,PATCH,DELETE)" as Rest_Covid
+' }
+' UC_Login -> Rest_Login
+' UC_StaffsAdmin ---> Rest_Staffs
+' UC_StaffsAdmin ---> Rest_Staff
+' UC_StaffsAttendanceAdmin -> Rest_AttendanceStaffs
+' UC_DepartmentsAdmin ---> Rest_Departments
+' UC_DepartmentsStaffsAdmin ---> Rest_DepartmentsStaffs
+' UC_StaffsSalaryAdmin ---> Rest_SalaryStaffs
+' UC_CovidAdmin ---> Rest_Covid
 ' System ---> UC_Holydays
 
-
-rectangle Controller{
-  usecase "/staffs/info\n(GET,POST)" as Rest_Staffs
-  usecase "/staffs/info/{id}\n(GET,PATCH,DELETE)" as Rest_Staff
-  usecase "/staffs/attendance\n(GET,POST,DELETE)" as Rest_AttendanceStaffs
-  usecase "/staffs/attendance/{id}\n(GET,POST,DELETE)" as Rest_AttendanceStaff
-  usecase "/staffs/salary\n(GET,POST,DELETE)" as Rest_SalaryStaffs
-  usecase "/staffs/salary/{id}\n(GET,POST,DELETE)" as Rest_SalaryStaff
-  usecase "/departments\n(GET,POST,PATCH,DELETE)" as Rest_Departments
-  usecase "/login\n(POST)" as Rest_Login
-  usecase "/departments/{id}\n(GET)" as Rest_DepartmentsStaffs
-  usecase "Thêm ngày phép toàn công ty (định kỳ)" as UC_Holydays
-  usecase "/covid\n(GET,POST,PATCH,DELETE)" as Rest_Covid
-}
-UC_Login -> Rest_Login
-UC_StaffsAdmin ---> Rest_Staffs
-UC_StaffsAdmin ---> Rest_Staff
-UC_StaffsAttendanceAdmin -> Rest_AttendanceStaffs
-UC_DepartmentsAdmin ---> Rest_Departments
-UC_DepartmentsStaffsAdmin ---> Rest_DepartmentsStaffs
-UC_StaffsSalaryAdmin ---> Rest_SalaryStaffs
-UC_CovidAdmin ---> Rest_Covid
-System ---> UC_Holydays
-
-database MSSQL
-Controller <---> MSSQL : transaction via Model
+' database MSSQL
+' Controller <---> MSSQL : transaction via Model
 
 
-package StaffApp {
-  usecase "Đăng nhập" as UC_LoginStaff
-  usecase "Điểm danh bắt đầu/kết thúc làm" as UC_AttendanceStaff
-  usecase "Xác nhận dữ liệu giờ làm của nhân viên" as UC_CheckTimeSheetStaffs
-  usecase "Xem/sửa thông tin cá nhân" as UC_EditProfileStaff
-  usecase "Tra cứu thông tin giờ làm, lương" as UC_SalaryStaff
-  usecase "Thông tin Covid cá nhân" as UC_CovidStaff
-}
-actor "Nhân viên" as Staff
-actor "Quản lý" as Manager
-UC_LoginStaff <--- Staff
-UC_AttendanceStaff <--- Staff
-UC_EditProfileStaff <--- Staff
-UC_SalaryStaff <--- Staff
-UC_CovidStaff <--- Staff
-UC_CheckTimeSheetStaffs <--- Manager
-UC_AttendanceStaff <--- Manager
-UC_CovidStaff <--- Manager
-UC_LoginStaff <--- Manager
+' package StaffApp {
+'   usecase "Đăng nhập" as UC_LoginStaff
+'   usecase "Điểm danh bắt đầu/kết thúc làm" as UC_AttendanceStaff
+'   usecase "Xác nhận dữ liệu giờ làm của nhân viên" as UC_CheckTimeSheetStaffs
+'   usecase "Xem/sửa thông tin cá nhân" as UC_EditProfileStaff
+'   usecase "Tra cứu thông tin giờ làm, lương" as UC_SalaryStaff
+'   usecase "Thông tin Covid cá nhân" as UC_CovidStaff
+' }
+' actor "Nhân viên" as Staff
+' actor "Quản lý" as Manager
+' UC_LoginStaff <--- Staff
+' UC_AttendanceStaff <--- Staff
+' UC_EditProfileStaff <--- Staff
+' UC_SalaryStaff <--- Staff
+' UC_CovidStaff <--- Staff
+' UC_CheckTimeSheetStaffs <--- Manager
+' UC_AttendanceStaff <--- Manager
+' UC_CovidStaff <--- Manager
+' UC_LoginStaff <--- Manager
 
-Rest_Login <--- UC_LoginStaff
-Rest_Covid <--- UC_CovidStaff
-Rest_Staff <--- UC_EditProfileStaff
-Rest_AttendanceStaff <--- UC_AttendanceStaff
-Rest_AttendanceStaffs <--- UC_CheckTimeSheetStaffs
-Rest_SalaryStaff <--- UC_SalaryStaff
+' Rest_Login <--- UC_LoginStaff
+' Rest_Covid <--- UC_CovidStaff
+' Rest_Staff <--- UC_EditProfileStaff
+' Rest_AttendanceStaff <--- UC_AttendanceStaff
+' Rest_AttendanceStaffs <--- UC_CheckTimeSheetStaffs
+' Rest_SalaryStaff <--- UC_SalaryStaff
 
 
 @enduml
